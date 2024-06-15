@@ -7,3 +7,11 @@ l
 <app/src/main/java/com/example/xorcipherapp/MainActivity.java,f\b\fb3931eb28289911f6f4aa201f90ffab18787cd2
 ~
 Napp/src/androidTest/java/com/example/xorcipherapp/ExampleInstrumentedTest.java,e\1\e1589e6378ae2b796274bb04b2d77d2cd8f313ab
+C
+settings.gradle.kts,7\4\749edfcc96398253e5b3416184e95c46621da850
+A
+gradle.properties,2\a\2afbb999f001938c88fa43fc2ef52abf0f8213e4
+@
+build.gradle.kts,d\b\dbcff70658daf80b53ce624f6adcaa529df5ed8d
+D
+app/build.gradle.kts,d\2\d2a4383452aad84a18429a5844d31330a012a9e6

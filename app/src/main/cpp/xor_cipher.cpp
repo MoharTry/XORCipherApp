@@ -26,3 +26,10 @@ JNIEXPORT jstring JNICALL
 Java_com_example_xorcipherapp_MainActivity_decrypt(JNIEnv* env, jobject, jstring input, jstring key) {
     return Java_com_example_xorcipherapp_MainActivity_encrypt(env, nullptr, input, key);
 }
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_example_xorcipherapp_MainActivity_encryptDecrypt(JNIEnv *env, jobject thiz, jstring input,
+                                                          jstring key, jboolean is_encrypt) {
+    // TODO: implement encryptDecrypt()
+}
