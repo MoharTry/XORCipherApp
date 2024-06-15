@@ -15,3 +15,5 @@ A
 build.gradle.kts,d\b\dbcff70658daf80b53ce624f6adcaa529df5ed8d
 D
 app/build.gradle.kts,d\2\d2a4383452aad84a18429a5844d31330a012a9e6
+O
+app/src/main/cpp/native-lib.cpp,0\5\05b06ab0d5ff3a29c39bddac9c41f1011ad7a055

@@ -6,14 +6,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-
 public class MainActivity extends AppCompatActivity {
+
+    static {
+        System.loadLibrary("xor-cipher");
+    }
 
     private EditText inputText;
     private EditText keyText;
     private TextView resultText;
     private Button encryptButton;
     private Button decryptButton;
+
+    private native String encryptNative(String text, String key);
+    private native String decryptNative(String text, String key);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         String text = inputText.getText().toString();
         String key = keyText.getText().toString();
         if (!text.isEmpty() && !key.isEmpty()) {
-            resultText.setText(encryptDecrypt(text, key,true));
+            resultText.setText(encryptNative(text, key));
         }
     }
 
@@ -53,20 +59,20 @@ public class MainActivity extends AppCompatActivity {
         String text = inputText.getText().toString();
         String key = keyText.getText().toString();
         if (!text.isEmpty() && !key.isEmpty()) {
-            resultText.setText(encryptDecrypt(text, key,false)); // XOR decryption is the same as encryption
+            resultText.setText(decryptNative(text, key)); // XOR decryption is the same as encryption
         }
     }
 
-    private String encryptDecrypt(String text, String key, boolean isEncrypt) {
-        char[] result = new char[text.length()];
-        for (int i = 0; i < text.length(); i++) {
-            result[i] = (char) (text.charAt(i) ^ key.charAt(i % key.length()));
-        }
-        if(!isEncrypt){
-            for(int i = 0 ; i< text.length(); i++){
-                result[i] ^= key.charAt(i % key.length());
-            }
-        }
-        return new String(result);
-    }
+//    private String encryptDecrypt(String text, String key, boolean isEncrypt) {
+//        char[] result = new char[text.length()];
+//        for (int i = 0; i < text.length(); i++) {
+//            result[i] = (char) (text.charAt(i) ^ key.charAt(i % key.length()));
+//        }
+//        if(!isEncrypt){
+//            for(int i = 0 ; i< text.length(); i++){
+//                result[i] ^= key.charAt(i % key.length());
+//            }
+//        }
+//        return new String(result);
+//    }
 }
