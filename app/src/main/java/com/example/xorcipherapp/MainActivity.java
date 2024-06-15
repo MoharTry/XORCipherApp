@@ -1,50 +1,72 @@
 package com.example.xorcipherapp;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    static {
-        System.loadLibrary("xor_cipher");
-    }
-
-    private native String encrypt(String input, String key);
-    private native String decrypt(String input, String key);
+    private EditText inputText;
+    private EditText keyText;
+    private TextView resultText;
+    private Button encryptButton;
+    private Button decryptButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        EditText inputText = findViewById(R.id.inputText);
-        EditText keyText = findViewById(R.id.keyText);
-        TextView resultText = findViewById(R.id.keyText);
-        Button encryptButton = findViewById(R.id.encryptButton);
-        Button decryptButton = findViewById(R.id.decryptButton);
+        inputText = findViewById(R.id.inputText);
+        keyText = findViewById(R.id.keyText);
+        resultText = findViewById(R.id.resultText);
+        encryptButton = findViewById(R.id.encryptButton);
+        decryptButton = findViewById(R.id.decryptButton);
 
         encryptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String input = inputText.getText().toString();
-                String key = keyText.getText().toString();
-                String encrypted = encrypt(input, key);
-                resultText.setText(encrypted);
+                handleEncrypt();
             }
         });
 
         decryptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String input = inputText.getText().toString();
-                String key = keyText.getText().toString();
-                String decrypted = decrypt(input, key);
-                resultText.setText(decrypted);
+                handleDecrypt();
             }
         });
+    }
+
+    private void handleEncrypt() {
+        String text = inputText.getText().toString();
+        String key = keyText.getText().toString();
+        if (!text.isEmpty() && !key.isEmpty()) {
+            resultText.setText(encryptDecrypt(text, key,true));
+        }
+    }
+
+    private void handleDecrypt() {
+        String text = inputText.getText().toString();
+        String key = keyText.getText().toString();
+        if (!text.isEmpty() && !key.isEmpty()) {
+            resultText.setText(encryptDecrypt(text, key,false)); // XOR decryption is the same as encryption
+        }
+    }
+
+    private String encryptDecrypt(String text, String key, boolean isEncrypt) {
+        char[] result = new char[text.length()];
+        for (int i = 0; i < text.length(); i++) {
+            result[i] = (char) (text.charAt(i) ^ key.charAt(i % key.length()));
+        }
+        if(!isEncrypt){
+            for(int i = 0 ; i< text.length(); i++){
+                result[i] ^= key.charAt(i % key.length());
+            }
+        }
+        return new String(result);
     }
 }
